@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        html, body {
+            background-color: #1a1a1a;  /* Dark background color */
+            color: #fff;  /* White text color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            background-color: #333;  /* Darker container background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 400px;  /* Adjust width as needed */
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #fff;  /* White text color */
+        }
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-container form label {
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            width: 100%;
+        }
+        .login-container form input[type="text"],
+        .login-container form input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 4px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #fff;  /* Lighter input field background */
+            color: #333;  /* Text color for input fields */
+        }
+        .login-container form button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .login-container form button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .signup-link {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #fff;  /* White text color */
+        }
+        .signup-link a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .error-message ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .error-message li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Username:
+                <input type="text" name="username" required>
+            </label>
+            <label for="password">Password:
+                <input type="password" name="password" required>
+            </label>
+            <button type="submit">Login</button>
+        </form>
+        <p class="signup-link">Don't have an account? <a href="http://127.0.0.1:8000/" style="color: #1e90ff;">Signup</a></p>
+        {% if form.errors %}
+            <div class="error-message">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ field }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
