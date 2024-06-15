@@ -10,6 +10,7 @@ class Command(BaseCommand):
         default, created = Group.objects.get_or_create(name='default')
         mods, created = Group.objects.get_or_create(name='mods')
         superusers, created = Group.objects.get_or_create(name='superusers')
+        banned, created = Group.objects.get_or_create(name='banned')
 
         # Define content type for your custom model (e.g., 'Post' model)
         content_type = ContentType.objects.get_for_model(Post)  
@@ -48,6 +49,8 @@ class Command(BaseCommand):
             Permission.objects.get(codename='delete_post', content_type=content_type),
             Permission.objects.get(codename='can_ban_user', content_type=content_type2),
         ])
+
+        banned.permissions.set([])
 
         # Create a superuser
         superuser = User.objects.create_superuser(username="VIDHU", password="VIDHU$12")
