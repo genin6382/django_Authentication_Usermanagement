@@ -16,13 +16,14 @@ def home(request):
             postid=request.POST.get('post-id')
             userid=request.POST.get('user-id')
             unbanid=request.POST.get('unban-user-id')
+            banned=Group.objects.get(name='banned')
+            
             if postid:
                 post=Post.objects.get(id=postid)
                 if post.author==request.user or request.user.has_perm('myapp.delete_post'):
                     post.delete()
 
             if userid is not None:
-                banned=Group.objects.get(name='banned')
                 user=User.objects.get(id=userid)
                 grpnames=user.groups.all()
 
@@ -33,7 +34,6 @@ def home(request):
                 user.save()
                 
             if unbanid is not None:
-                banned=Group.objects.get(name="banned")
                 default=Group.objects.get(name="default")
                 user=User.objects.get(id=unbanid)
                 user.groups.remove(banned)
@@ -43,7 +43,7 @@ def home(request):
     except:
         return HttpResponse('Cannot perform operation')
 
-    return render(request,'home.html',{'posts':posts})
+    return render(request,'home.html',{'posts':posts,'banned_group':Group.objects.get(name"banned")})
 
 def signup(request):
     form=SignupForm()
