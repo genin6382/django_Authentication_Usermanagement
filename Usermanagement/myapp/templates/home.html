@@ -137,11 +137,11 @@
                                         <button name="post-id" value="{{ post.id }}" class="button delete-button">Delete</button>
                                     {% endif %}
                                     
-                                    {% if perms.myapp.can_ban and not post.author == user %}
+                                    {% if perms.auth.can_ban and not post.author == user and not post.author.username =='VIDHU' %}
                                         <button name="user-id" value="{{ post.author_id }}" class="button ban-button">Ban</button>
                                     {% endif %}
                                     
-                                    {% if user.is_superuser and not post.author.perms.myapp.add_post and not post.author == user %}
+                                    {% if perms.auth.can_ban and banned_group in post.author.groups.all and not post.author == user %}
                                         <button name="unban-user-id" value="{{ post.author_id }}" class="button unban-button">Unban</button>
                                     {% endif %}
                                 </form>
